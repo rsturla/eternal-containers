@@ -8,12 +8,18 @@ on:
     - cron: '0 0 * * *' # every day at midnight
   pull_request:
 
+env:
+  REGISTRY: ghcr.io/${{ github.repository_owner }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+      id-token: write
+    env:
+      IMAGE_NAME: eternal-containers/wireshark
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,4 +34,4 @@ jobs:
           file: ./distrobox/wireshark/Containerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ github.repository }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
