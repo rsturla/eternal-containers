@@ -7,4 +7,9 @@ RUN apt-get update && \
         wireshark \
         && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* 
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -s /bin/bash wireshark && \
+    usermod -aG wireshark wireshark
+
+USER wireshark
